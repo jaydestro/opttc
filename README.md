@@ -1,13 +1,16 @@
-# opttc
-on prem to the cloud notes
+# opttc - create Azure SQL from ARM via Azure CLI
 
-# ENTER PARAMETERS WHERE *'S ARE
+# paramenters for creation
+
+RG=""
+LOCATION=""
+SERVERNAME=""
+SQLDBNAME=""
+USERNAME=""
+PASSWORD=''
 
 # CREATE RESOURCE GROUP
-az group create --name * --location *
+az group create --name $RG --location $LOCATION
 
 # CREATE AZURE SQL 
-az  deployment group create --resource-group opttc  --parameters "{ \"location\": { \"value\": \"*\" } }" "{ \"serverName\": { \"value\": \"*\" } }" "{ \"sqlDBName\": { \"value\": \"*\" } }" "{ \"administratorLogin\": { \"value\": \"*\" } }" "{ \"administratorLoginPassword\": { \"value\": \"*\" } }" --template-uri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-sql-database/azuredeploy.json
-
-# ADD FIREWALL RULE FOR SOURCE SQL SERVER
-az sql server firewall-rule create --end-ip-address * --name * --resource-group  opttc --server * --start-ip-address *
+az deployment group create --resource-group $RG  --parameters "{ \"location\": { \"value\": \"$LOCATION\" } }" "{ \"serverName\": { \"value\": \"$SERVERNAME\" } }" "{ \"sqlDBName\": { \"value\": \"$SQLDBNAME\" } }" "{ \"administratorLogin\": { \"value\": \"$USERNAME\" } }" "{ \"administratorLoginPassword\": { \"value\": \"$PASSWORD\" } }" --template-uri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-sql-database/azuredeploy.json
